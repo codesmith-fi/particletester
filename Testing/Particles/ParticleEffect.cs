@@ -48,6 +48,12 @@ namespace Codesmith.SmithNgine.Particles
             get;
             set;
         }
+
+        public Renderer Renderer
+        {
+            get;
+            set;
+        }
         #endregion
 
         /// <summary>
@@ -203,18 +209,6 @@ namespace Codesmith.SmithNgine.Particles
                     }
                 }
                 em.Update(gameTime);
-            }
-        }
-
-        /// <summary>
-        /// Draws all the particles in this effect
-        /// </summary>
-        /// <param name="spriteBatch">SpriteBatch</param>
-        public void Draw(Renderer renderer, Time time)
-        {
-            foreach (ParticleEmitter em in emitters)
-            {
-                em.Draw(renderer, time);
             }
         }
         #endregion

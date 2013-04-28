@@ -102,17 +102,5 @@ using DeltaEngine.Rendering;
             TTLPercent = 0.0f;
         }
         #endregion
-
-        #region New methods
-        public void Draw(Renderer r, Time t)
-        {
-            Render(r, t);
-        }
-
-        protected override void Render(Renderer renderer, Time time)
-        {
-            base.Render(renderer, time);
-        }
-        #endregion
     }
 }

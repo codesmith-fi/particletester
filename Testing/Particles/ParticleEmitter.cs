@@ -265,19 +265,12 @@ namespace Codesmith.SmithNgine.Particles
                 // Call the concrete emitter for last modifications
                 GenerateParticle(p);
                 particles.Add(p);
+                hostEffect.Renderer.Add(p);
             }
         }
         #endregion
 
         #region From base class
-        public void Draw(Renderer renderer, Time time)
-        {
-            foreach (Particle p in particles)
-            {
-                p.Draw(renderer, time);
-            }
-        }
-
         /// <summary>
         /// Called by the host ParticleEffects
         /// 

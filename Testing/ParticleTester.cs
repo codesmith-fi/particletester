@@ -40,9 +40,7 @@ namespace ParticleApp
             // Update the particle system
             particleSystem.Update(time);
 
-            // This probably is stupid and too XNAish to manually draw the sprites 
-            // instead of adding to the Renderer. I'll try that way later
-            particleSystem.Draw(time);            
+            window.Title = "Particle System Tester, Particles: " + particleSystem.ParticleCount;
         }
 
         private void SetupParticleSystem()
@@ -54,9 +52,9 @@ namespace ParticleApp
 
             // Set up one emitter (point emitter) for the effect 
             // using 3 images for particles...
-            emitter = new PointEmitter(Point.Zero);
+//            emitter = new PointEmitter(Point.Zero);
             // Try this too
-//            emitter = new LineEmitter(new Point(-0.1f, 0), new Point(0.1f, 0));
+            emitter = new LineEmitter(new Point(-0.1f, 0), new Point(0.1f, 0));
             // Generate 100 particles per second
             emitter.Quantity = 100;
             emitter.AddPropertyGenerator(

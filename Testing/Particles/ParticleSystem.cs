@@ -135,6 +135,7 @@ namespace Codesmith.SmithNgine.Particles
         public void AddEffect(ParticleEffect newEffect)
         {
             Debug.Assert(!effects.Contains(newEffect), "Can't add same effect twice");
+            newEffect.Renderer = Renderer;
             effects.Add(newEffect);
         }
 
@@ -183,14 +184,6 @@ namespace Codesmith.SmithNgine.Particles
                 {
                     eff.Update(gameTime);
                 }
-            }
-        }
-
-        public void Draw(Time time)
-        {
-            foreach (ParticleEffect eff in effects)
-            {
-                eff.Draw(Renderer, time);
             }
         }
         #endregion
