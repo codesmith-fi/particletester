@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <PlatformTarget>x86</PlatformTarget>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2B09018C-E6A0-43AC-B808-8000C3CA31C0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Testing</RootNamespace>
+    <AssemblyName>Testing</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DeltaEngine.Input, Version=0.9.7.5, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\tools\delta\DeltaEngine_0.9.7.5\DeltaEngine.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+    </Reference>
+    <Reference Include="DeltaEngine.Core">
+      <HintPath>$(DeltaEnginePath)\DeltaEngine.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DeltaEngine.Datatypes">
+      <HintPath>$(DeltaEnginePath)\DeltaEngine.Datatypes.dll</HintPath>
+    </Reference>
+    <Reference Include="DeltaEngine.Graphics">
+      <HintPath>$(DeltaEnginePath)\DeltaEngine.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="DeltaEngine.Platforms">
+      <HintPath>$(DeltaEnginePath)\DeltaEngine.Platforms.dll</HintPath>
+    </Reference>
+    <Reference Include="DeltaEngine.WindowsOpenGL">
+      <HintPath>$(DeltaEnginePath)\DeltaEngine.WindowsOpenGL.dll</HintPath>
+    </Reference>
+    <Reference Include="DeltaEngine.Platforms.Windows">
+      <HintPath>$(DeltaEnginePath)\DeltaEngine.Platforms.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="DeltaEngine.Rendering">
+      <HintPath>$(DeltaEnginePath)\DeltaEngine.Rendering.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="General\DefaultTransitionSource.cs" />
+    <Compile Include="General\GameObjectBase.cs" />
+    <Compile Include="General\IActivatableObject.cs" />
+    <Compile Include="General\IRotatableObject.cs" />
+    <Compile Include="General\ITransitionSource.cs" />
+    <Compile Include="General\MovableGameObject.cs" />
+    <Compile Include="General\PositionEventArgs.cs" />
+    <Compile Include="General\RotationEventArgs.cs" />
+    <Compile Include="MathUtil\Interpolations.cs" />
+    <Compile Include="MathUtil\MathConstants.cs" />
+    <Compile Include="MathUtil\MathFunctions.cs" />
+    <Compile Include="MathUtil\PseudoRandom.cs" />
+    <Compile Include="MathUtil\Validators.cs" />
+    <Compile Include="Particles\CircleEmitter.cs" />
+    <Compile Include="Particles\ConeEmitter.cs" />
+    <Compile Include="Particles\Generators\ConstantAngularVelocityGenerator.cs" />
+    <Compile Include="Particles\Generators\ConstantColorGenerator.cs" />
+    <Compile Include="Particles\Generators\ConstantOpacityGenerator.cs" />
+    <Compile Include="Particles\Generators\ConstantPropertyGenerator.cs" />
+    <Compile Include="Particles\Generators\ConstantRotationGenerator.cs" />
+    <Compile Include="Particles\Generators\ConstantScaleGenerator.cs" />
+    <Compile Include="Particles\Generators\ConstantSpeedGenerator.cs" />
+    <Compile Include="Particles\Generators\ConstantTTLGenerator.cs" />
+    <Compile Include="Particles\Generators\PropertyGenerator.cs" />
+    <Compile Include="Particles\Generators\RandomAngularVelocityGenerator.cs" />
+    <Compile Include="Particles\Generators\RandomColorGenerator.cs" />
+    <Compile Include="Particles\Generators\RandomOpacityGenerator.cs" />
+    <Compile Include="Particles\Generators\RandomRotationGenerator.cs" />
+    <Compile Include="Particles\Generators\RandomScaleGenerator.cs" />
+    <Compile Include="Particles\Generators\RandomSpeedGenerator.cs" />
+    <Compile Include="Particles\Generators\RandomTTLGenerator.cs" />
+    <Compile Include="Particles\Generators\RangePropertyGenerator.cs" />
+    <Compile Include="Particles\LineEmitter.cs" />
+    <Compile Include="Particles\Modifiers\AngularVelocityModifier1.cs" />
+    <Compile Include="Particles\Modifiers\AngularVelocityModifier2.cs" />
+    <Compile Include="Particles\Modifiers\DampingLinearVelocityModifier.cs" />
+    <Compile Include="Particles\Modifiers\DepthModifier1.cs" />
+    <Compile Include="Particles\Modifiers\DepthModifier2.cs" />
+    <Compile Include="Particles\Modifiers\LinearVelocityModifier.cs" />
+    <Compile Include="Particles\Modifiers\OpacityModifier1.cs" />
+    <Compile Include="Particles\Modifiers\OpacityModifier2.cs" />
+    <Compile Include="Particles\Modifiers\ParticleModifier.cs" />
+    <Compile Include="Particles\Modifiers\RotationModifier1.cs" />
+    <Compile Include="Particles\Modifiers\RotationModifier2.cs" />
+    <Compile Include="Particles\Modifiers\RotationModifierByAngularVelocity.cs" />
+    <Compile Include="Particles\Modifiers\ScaleModifier1.cs" />
+    <Compile Include="Particles\Modifiers\ScaleModifier2.cs" />
+    <Compile Include="Particles\Particle.cs" />
+    <Compile Include="Particles\ParticleEffect.cs" />
+    <Compile Include="Particles\ParticleEmitter.cs" />
+    <Compile Include="Particles\ParticleSystem.cs" />
+    <Compile Include="Particles\PointEmitter.cs" />
+    <Compile Include="ParticleTester.cs" />
+    <Compile Include="Primitives\Circle.cs" />
+    <Compile Include="Primitives\Line.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\smoke1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\smoke2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\smoke3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
