@@ -22,6 +22,7 @@ using DeltaEngine.Rendering;
     public class Particle : Sprite
     {
         private float scale;
+        private float depth;
 
         #region Properties
         public float InitialScale { get; set; }
@@ -32,6 +33,15 @@ using DeltaEngine.Rendering;
         public float InitialDepth { get; set; }
         public Point LinearVelocity { get; set; }
         public float AngularVelocity { get; set; }
+        public float Depth 
+        {
+            get { return depth; }
+            set
+            {
+                depth = MathFunctions.Clamp(value, -1.0f, 1.0f);
+                RenderLayer = (int)(depth * 99);
+            }
+        }
 
         public Point Origin
         {
@@ -50,6 +60,7 @@ using DeltaEngine.Rendering;
             get { return DrawArea.Center; }
             set { DrawArea.Center = value; }
         }
+
         public float Opacity  
         {
             get { return Color.AlphaValue; }
@@ -65,7 +76,7 @@ using DeltaEngine.Rendering;
                 DrawArea = Rectangle.FromCenter(DrawArea.Center, InitialDrawArea.Size * scale);
             }
         }
-        public float Depth { get; set; }
+
         public float TTL { get; set; }
         public float TTLPercent { get; set; }
 
@@ -102,7 +113,6 @@ using DeltaEngine.Rendering;
             InitialRotation = 0.0f;
             InitialAngularVelocity = 0.0f;
             InitialDepth = 0.0f;
-            Depth = 0.0f;
             Color = Color.White;
             Opacity = InitialOpacity;
             Rotation = InitialRotation;

@@ -26,7 +26,7 @@ namespace Codesmith.SmithNgine.Particles.Modifiers
 
         public override void Apply(Particle p, float elapsedSeconds)
         {
-            p.Depth = Interpolations.LinearInterpolate(
+            p.RenderLayer= (int)Interpolations.LinearInterpolate(
                 Initial, Final, p.TTLPercent);
         }
     }
