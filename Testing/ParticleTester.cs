@@ -130,7 +130,7 @@ namespace ParticleApp
 
             // Automatically generate particles, quatity per second
             emitter1.Flags |= EmitterModes.AutoGenerate;
-            emitter1.AddTexture(content.Load<Image>("smoke2"));
+            emitter1.AddTexture(content.Load<Image>("smoke1"));
             emitter1.AddTexture(content.Load<Image>("smoke3"));
             waterfall.AddEmitter(emitter1);
             particleSystem.AddEffect(waterfall);
