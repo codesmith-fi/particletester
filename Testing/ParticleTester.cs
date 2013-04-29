@@ -55,7 +55,7 @@ namespace ParticleApp
         private void SetupParticleSystem()
         {
             particleSystem = new ParticleSystem(renderer);
-            particleSystem.EnableCache(2000);
+            particleSystem.EnableCache(1000);
             effect = new ParticleEffect();
             effect.Rotation = 0f;
             effect.Position = Point.Half;
