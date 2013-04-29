@@ -45,6 +45,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\tools\delta\DeltaEngine_0.9.7.5\DeltaEngine.Input.dll</HintPath>
     </Reference>
+    <Reference Include="DeltaEngine.WindowsOpenGL">
+      <HintPath>..\..\..\..\..\tools\delta\DeltaEngine_0.9.7.5\DeltaEngine.WindowsOpenGL.dll</HintPath>
+    </Reference>
     <Reference Include="System">
     </Reference>
     <Reference Include="DeltaEngine.Core">
@@ -58,9 +61,6 @@
     </Reference>
     <Reference Include="DeltaEngine.Platforms">
       <HintPath>$(DeltaEnginePath)\DeltaEngine.Platforms.dll</HintPath>
-    </Reference>
-    <Reference Include="DeltaEngine.WindowsOpenGL">
-      <HintPath>$(DeltaEnginePath)\DeltaEngine.WindowsOpenGL.dll</HintPath>
     </Reference>
     <Reference Include="DeltaEngine.Platforms.Windows">
       <HintPath>$(DeltaEnginePath)\DeltaEngine.Platforms.Windows.dll</HintPath>

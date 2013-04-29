@@ -119,6 +119,12 @@ namespace Codesmith.SmithNgine.Particles
             }
         }
 
+        public Size ParticleSize
+        {
+            get;
+            set;
+        }
+
         #region Constructors
         /// <summary>
         /// Constructor
@@ -128,6 +134,7 @@ namespace Codesmith.SmithNgine.Particles
             emitters = new List<ParticleEmitter>();
             GravityVector = new Point(0.0f, 0.0f);
             Name = "Default Effect";
+            ParticleSize = Size.Half;
         }
         #endregion
 

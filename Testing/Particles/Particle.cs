@@ -62,14 +62,18 @@ using DeltaEngine.Rendering;
             set
             {
                 scale = value;
-                Point oldCenter = DrawArea.Center;
-                DrawArea.Size = new Size(value);
-                DrawArea.Center = oldCenter;
+                DrawArea = Rectangle.FromCenter(DrawArea.Center, InitialDrawArea.Size * scale);
             }
         }
         public float Depth { get; set; }
         public float TTL { get; set; }
         public float TTLPercent { get; set; }
+
+        public Rectangle InitialDrawArea
+        {
+            get;
+            internal set;
+        }
         #endregion
 
         #region Constructors
@@ -83,8 +87,9 @@ using DeltaEngine.Rendering;
         /// 
         /// </summary>
         /// <param name="p"></param>
-        public Particle(Image image) : base(image, Rectangle.One)
+        public Particle(Image image, Rectangle drawArea) : base(image, drawArea)
         {
+            InitialDrawArea = drawArea;
             InitialSpeed = 0.0f;
             InitialScale = 1.0f;
             InitialOpacity = 1.0f;

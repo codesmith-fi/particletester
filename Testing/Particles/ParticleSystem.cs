@@ -13,6 +13,7 @@ namespace Codesmith.SmithNgine.Particles
     using System.Diagnostics;
     using Codesmith.SmithNgine.General;
     using DeltaEngine.Core;
+    using DeltaEngine.Datatypes;
     using DeltaEngine.Rendering;
 
     public enum ParticleSystemStatus
@@ -36,6 +37,7 @@ namespace Codesmith.SmithNgine.Particles
         #region Fields
         private List<ParticleEffect> effects;
         private ParticleSystemStatus status;
+        private Size particleSize;
         #endregion
 
         /// <summary>
@@ -114,6 +116,19 @@ namespace Codesmith.SmithNgine.Particles
             set;
         }
 
+        public Size DefaultParticleSize
+        {
+            get { return particleSize; }
+            set
+            {
+                particleSize = value;
+                foreach (ParticleEffect eff in effects)
+                {
+                    eff.ParticleSize = value;
+                }
+            }
+        }
+
         #region Constructor
         /// <summary>
         /// Constructs a new particle system
@@ -122,6 +137,7 @@ namespace Codesmith.SmithNgine.Particles
         {
             Renderer = renderer;
             effects = new List<ParticleEffect>();
+            DefaultParticleSize = Size.Half;
             this.status = ParticleSystemStatus.Idle;
             Resume();
         }
@@ -136,6 +152,7 @@ namespace Codesmith.SmithNgine.Particles
         {
             Debug.Assert(!effects.Contains(newEffect), "Can't add same effect twice");
             newEffect.Renderer = Renderer;
+            newEffect.ParticleSize = DefaultParticleSize;
             effects.Add(newEffect);
         }
 

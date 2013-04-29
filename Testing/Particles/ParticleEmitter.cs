@@ -256,7 +256,8 @@ namespace Codesmith.SmithNgine.Particles
                     budget--;
                     if (budget < 0) return;
                 }
-                Particle p = new Particle(textures[random.Next(textures.Count)]);
+                Particle p = new Particle(textures[random.Next(textures.Count)], 
+                    Rectangle.FromCenter(Position, hostEffect.ParticleSize));
                 // Apply all generators to this particle
                 foreach (PropertyGenerator g in generators)
                 {

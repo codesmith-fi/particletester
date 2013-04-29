@@ -21,16 +21,23 @@ namespace ParticleApp
         private ParticleEmitter emitter;
         private Renderer renderer;
         private Content content;
-
         public ParticleTester(Window window, InputCommands inputCommands, Content content, Renderer renderer)
         {
             this.renderer = renderer;
             this.content = content;
             this.window = window;
             SetupParticleSystem();
+            particleSystem.DefaultParticleSize = Size.Half * window.ViewportPixelSize.Width / 1920f;
+
             window.Title = "Particle System Tester";
             window.BackgroundColor = Color.Black;
+            window.ViewportSizeChanged += window_ViewportSizeChanged;
             inputCommands.AddMouseMovement(mouse => this.mousePosition = mouse.Position);
+        }
+
+        private void window_ViewportSizeChanged(Size obj)
+        {
+            particleSystem.DefaultParticleSize = Size.Half * obj.Width/1920f;
         }
 
         public void Run(Time time, Window window)
@@ -48,8 +55,8 @@ namespace ParticleApp
             particleSystem = new ParticleSystem(renderer);
             effect = new ParticleEffect();
             effect.Rotation = 0f;
-            effect.Position = new Point(1,1);
-
+            effect.Position = Point.Half;
+            particleSystem.DefaultParticleSize = new Size(0.1f, 0.1f);
             // Set up one emitter (point emitter) for the effect 
             // using 3 images for particles...
 //            emitter = new PointEmitter(Point.Zero);
@@ -74,7 +81,7 @@ namespace ParticleApp
             emitter.AddParticleModifier(
                 new OpacityModifier1(0.0f));
             emitter.AddParticleModifier(
-                new ScaleModifier1(0.3f));
+                new ScaleModifier1(1.0f));
             emitter.AddParticleModifier(
                 new DampingLinearVelocityModifier(1.001f));
             // Automatically generate particles, quatity per second
@@ -85,5 +92,6 @@ namespace ParticleApp
             effect.AddEmitter(emitter);
             particleSystem.AddEffect(effect);
         }
+
     }
 }
