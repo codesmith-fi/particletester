@@ -116,6 +116,15 @@ namespace Codesmith.SmithNgine.Particles
             set;
         }
 
+        /// <summary>
+        /// The particle bool
+        /// </summary>
+        internal ParticlePool Pool
+        {
+            set;
+            get;
+        }
+
         public Size DefaultParticleSize
         {
             get { return particleSize; }
@@ -151,6 +160,7 @@ namespace Codesmith.SmithNgine.Particles
         public void AddEffect(ParticleEffect newEffect)
         {
             Debug.Assert(!effects.Contains(newEffect), "Can't add same effect twice");
+            newEffect.ParticleSystem = this;
             newEffect.Renderer = Renderer;
             newEffect.ParticleSize = DefaultParticleSize;
             effects.Add(newEffect);
@@ -163,6 +173,15 @@ namespace Codesmith.SmithNgine.Particles
         public void RemoveEffect(ParticleEffect effect)
         {
             effects.Remove(effect);
+        }
+
+        /// <summary>
+        /// Enable particle pool/cache 
+        /// </summary>
+        /// <param name="amount"></param>
+        public void EnableCache(int amount = 1000)
+        {
+            Pool = new ParticlePool(amount);
         }
 
         /// <summary>
@@ -204,5 +223,6 @@ namespace Codesmith.SmithNgine.Particles
             }
         }
         #endregion
+
     }
 }

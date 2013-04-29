@@ -47,12 +47,15 @@ namespace ParticleApp
             // Update the particle system
             particleSystem.Update(time);
 
-            window.Title = "Particle System Tester, Particles: " + particleSystem.ParticleCount;
+            window.Title = "Particle System Tester, Particles: " + particleSystem.ParticleCount + 
+                " : Renderables: " + renderer.NumberOfActiveRenderableObjects + 
+                " Fps: " + time.Fps;
         }
 
         private void SetupParticleSystem()
         {
             particleSystem = new ParticleSystem(renderer);
+            particleSystem.EnableCache(2000);
             effect = new ParticleEffect();
             effect.Rotation = 0f;
             effect.Position = Point.Half;
@@ -63,7 +66,7 @@ namespace ParticleApp
             // Try this too
             emitter = new LineEmitter(new Point(-0.1f, 0), new Point(0.1f, 0));
             // Generate 100 particles per second
-            emitter.Quantity = 100;
+            emitter.Quantity = 1000;
             emitter.AddPropertyGenerator(
                 new RandomSpeedGenerator(0.1f, 0.4f, 1.0f));
             emitter.AddPropertyGenerator(

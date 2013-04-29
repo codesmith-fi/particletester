@@ -90,6 +90,12 @@ using DeltaEngine.Rendering;
         public Particle(Image image, Rectangle drawArea) : base(image, drawArea)
         {
             InitialDrawArea = drawArea;
+            Reset();
+        }
+        #endregion
+
+        public void Reset()
+        {
             InitialSpeed = 0.0f;
             InitialScale = 1.0f;
             InitialOpacity = 1.0f;
@@ -98,7 +104,6 @@ using DeltaEngine.Rendering;
             InitialDepth = 0.0f;
             Depth = 0.0f;
             Color = Color.White;
-
             Opacity = InitialOpacity;
             Rotation = InitialRotation;
             Scale = InitialScale;
@@ -106,6 +111,5 @@ using DeltaEngine.Rendering;
             TTL = 1.0f;
             TTLPercent = 0.0f;
         }
-        #endregion
     }
 }
