@@ -237,6 +237,14 @@ namespace Codesmith.SmithNgine.Particles
                 RotationChanged(this, args);
             }
         }
+
+        public virtual void Draw(Time gameTime)
+        {
+            foreach (ParticleEmitter e in emitters)
+            {
+                e.Draw(gameTime);
+            }
+        }
         #endregion
     }
 }

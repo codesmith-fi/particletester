@@ -41,10 +41,11 @@ namespace ParticleApp
 
         public void Run(Time time, Window window)
         {
-            fireEffect.Position = Point.Half; // mousePosition;
+            fireEffect.Position = new Point(0.5f, 0.8f);
             waterfall.Position = mousePosition;
             // Update the particle system
             particleSystem.Update(time);
+            particleSystem.Draw(time);
 
             window.Title = "Particle System Tester, Particles: " + particleSystem.ParticleCount + 
                 " : Renderables: " + renderer.NumberOfActiveRenderableObjects + 
@@ -54,7 +55,8 @@ namespace ParticleApp
         private void SetupParticleSystem()
         {
             particleSystem = new ParticleSystem(renderer);
-            particleSystem.EnableCache(1000);
+            particleSystem.Screen = renderer.Screen;
+//            particleSystem.EnableCache(5000);
             fireEffect = new ParticleEffect();
             fireEffect.Rotation = 0f;
             fireEffect.Position = Point.Half;
@@ -103,7 +105,7 @@ namespace ParticleApp
             emitter1.AddTexture(content.Load<Image>("smoke2"));
             emitter2.AddTexture(content.Load<Image>("smoke3"));
             fireEffect.AddEmitter(emitter2);
-            particleSystem.AddEffect(fireEffect);
+//            particleSystem.AddEffect(fireEffect);
 
             SetupWaterFall(particleSystem);
         }
@@ -115,7 +117,7 @@ namespace ParticleApp
             waterfall.Rotation = 0f;
 
             ParticleEmitter emitter1 = new LineEmitter(new Point(-0.1f, 0), new Point(0.1f, 0));
-            emitter1.Quantity = 800;
+            emitter1.Quantity = 2000;
             emitter1.AddPropertyGenerator(new RandomDepthGenerator(0f, 0.2f, 1.0f));
             emitter1.AddPropertyGenerator(new RandomSpeedGenerator(0.2f, 0.4f, 1.0f));
             emitter1.AddPropertyGenerator(new ConstantScaleGenerator(0.0f));

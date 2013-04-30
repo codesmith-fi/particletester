@@ -138,6 +138,11 @@ namespace Codesmith.SmithNgine.Particles
             }
         }
 
+        public ScreenSpace Screen
+        {
+            get;
+            set;
+        }
         #region Constructor
         /// <summary>
         /// Constructs a new particle system
@@ -220,6 +225,14 @@ namespace Codesmith.SmithNgine.Particles
                 {
                     eff.Update(gameTime);
                 }
+            }
+        }
+
+        public virtual void Draw(Time gameTime)
+        {
+            foreach (ParticleEffect e in effects)
+            {
+                e.Draw(gameTime);
             }
         }
         #endregion

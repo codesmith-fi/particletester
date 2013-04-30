@@ -281,7 +281,7 @@ namespace Codesmith.SmithNgine.Particles
                 // Call the concrete emitter for last modifications
                 GenerateParticle(p);
                 particles.Add(p);
-                hostEffect.Renderer.Add(p);
+//                hostEffect.Renderer.Add(p);
             }
         }
         #endregion
@@ -321,7 +321,7 @@ namespace Codesmith.SmithNgine.Particles
                     {
                         pool.Insert(p);
                     }
-                    hostEffect.Renderer.Remove(p);
+//                    hostEffect.Renderer.Remove(p);
 //                    particles[i].Dispose();
                     particles.RemoveAt(i);
                     i--;
@@ -347,6 +347,44 @@ namespace Codesmith.SmithNgine.Particles
                 RotationChanged(this, args);
             }
         }
+
+        public virtual void Draw(Time gameTime)
+        {
+            // Draw the particles
+            int pc = particles.Count;
+            var vertices = new VertexPositionColorTextured[4];
+            ScreenSpace screen = hostEffect.ParticleSystem.Screen;
+            Particle p;
+/*
+ 				GetVertex(DrawArea.TopLeft, Point.Zero), 
+				GetVertex(DrawArea.TopRight, Point.UnitX),
+				GetVertex(DrawArea.BottomRight, Point.One),
+				GetVertex(DrawArea.BottomLeft, Point.UnitY
+ */
+            for (int i = 0; i < particles.Count; ++i)
+            {
+                p=particles[i];
+                vertices[0] = new VertexPositionColorTextured(
+                    screen.ToPixelSpaceRounded(Rotate(p.DrawArea.TopLeft, p)), p.Color, Point.Zero);
+                vertices[1] = new VertexPositionColorTextured(
+                    screen.ToPixelSpaceRounded(Rotate(p.DrawArea.TopRight, p)), p.Color, Point.UnitX);
+                vertices[2] = new VertexPositionColorTextured(
+                    screen.ToPixelSpaceRounded(Rotate(p.DrawArea.BottomRight, p)), p.Color, Point.One);
+                vertices[3] = new VertexPositionColorTextured(
+                    screen.ToPixelSpaceRounded(Rotate(p.DrawArea.BottomLeft, p)), p.Color, Point.UnitY);
+                p.Image.Draw(vertices);
+            }
+        }
+
+		protected Point Rotate(Point point, Particle particle)
+		{
+			var rotationCenter = particle.DrawArea.Center;
+			point -= rotationCenter;
+			float sin = MathFunctions.Sin(particle.Rotation);
+			float cos = MathFunctions.Cos(particle.Rotation);
+			point = new Point(point.X * cos - point.Y * sin, point.X * sin + point.Y * cos);
+			return rotationCenter + point;
+		}
         #endregion
     }
 }
