@@ -251,6 +251,8 @@ namespace Codesmith.SmithNgine.Particles
             Debug.Assert(textures.Count > 0, "No textures have been added to the emitter");
             Debug.Assert(hostEffect != null, "This emitter is not added to any ParticleEffect");
             ParticlePool pool = hostEffect.ParticleSystem.Pool;
+            ScreenSpace screen = hostEffect.ParticleSystem.Screen;
+
             for (int i = 0; i < count; i++)
             {
                 if (Flags.HasFlag(EmitterModes.UseBudgetOnly))
@@ -263,13 +265,13 @@ namespace Codesmith.SmithNgine.Particles
                 if (pool != null)
                 {
                     p = pool.Get();
-                    p.InitialDrawArea = Rectangle.FromCenter(Position, hostEffect.ParticleSize);
+                    p.InitialDrawArea = Rectangle.FromCenter(screen.ToPixelSpaceRounded(Position), screen.ToPixelSpace(hostEffect.ParticleSize));
                     p.SetImage(textures[random.Next(textures.Count)]);
                 }
                 else
                 {
-                    p = new Particle(textures[random.Next(textures.Count)],
-                        Rectangle.FromCenter(Position, hostEffect.ParticleSize));
+                    p= new Particle( textures[random.Next(textures.Count)],
+                        Rectangle.FromCenter(screen.ToPixelSpaceRounded(Position), screen.ToPixelSpace(hostEffect.ParticleSize)));
                 }
                 Debug.Assert(p != null, "Particle was not instantiated or fetched from cache!");
 
@@ -281,7 +283,6 @@ namespace Codesmith.SmithNgine.Particles
                 // Call the concrete emitter for last modifications
                 GenerateParticle(p);
                 particles.Add(p);
-//                hostEffect.Renderer.Add(p);
             }
         }
         #endregion
@@ -313,7 +314,7 @@ namespace Codesmith.SmithNgine.Particles
                 p.Position += p.LinearVelocity * gameTime.CurrentDelta;
 
                 // Finally apply the gravity from the effect
-                p.LinearVelocity += hostEffect.GravityVector;
+                p.LinearVelocity += hostEffect.GravityVector * gameTime.CurrentDelta;
 
                 if (p.TTLPercent >= 1.0f)
                 {
@@ -348,32 +349,48 @@ namespace Codesmith.SmithNgine.Particles
             }
         }
 
-        public virtual void Draw(Time gameTime)
+        private VertexPositionColorTextured[] _vertices = new VertexPositionColorTextured[4 * 1000];
+        private short[] _indices = new short[6 * 1000];
+
+        public virtual void Draw(Time gameTime, Drawing drawing)
         {
-            // Draw the particles
             int pc = particles.Count;
-            var vertices = new VertexPositionColorTextured[4];
-            ScreenSpace screen = hostEffect.ParticleSystem.Screen;
-            Particle p;
-/*
- 				GetVertex(DrawArea.TopLeft, Point.Zero), 
-				GetVertex(DrawArea.TopRight, Point.UnitX),
-				GetVertex(DrawArea.BottomRight, Point.One),
-				GetVertex(DrawArea.BottomLeft, Point.UnitY
- */
-            for (int i = 0; i < particles.Count; ++i)
+            if (_vertices.Length < (4 * pc) || _indices.Length < pc)
             {
-                p=particles[i];
-                vertices[0] = new VertexPositionColorTextured(
-                    screen.ToPixelSpaceRounded(Rotate(p.DrawArea.TopLeft, p)), p.Color, Point.Zero);
-                vertices[1] = new VertexPositionColorTextured(
-                    screen.ToPixelSpaceRounded(Rotate(p.DrawArea.TopRight, p)), p.Color, Point.UnitX);
-                vertices[2] = new VertexPositionColorTextured(
-                    screen.ToPixelSpaceRounded(Rotate(p.DrawArea.BottomRight, p)), p.Color, Point.One);
-                vertices[3] = new VertexPositionColorTextured(
-                    screen.ToPixelSpaceRounded(Rotate(p.DrawArea.BottomLeft, p)), p.Color, Point.UnitY);
-                p.Image.Draw(vertices);
+                _vertices = new VertexPositionColorTextured[4 * pc];
+                _indices = new short[6 * pc];
             }
+
+            Particle p; 
+            var indicesIndex = 0;
+            var quadIndex = 0;
+            for (int i = 0; i < pc; i++, quadIndex+=4)
+            {
+                p = particles[i];
+                _vertices[quadIndex] = new VertexPositionColorTextured(
+                    Rotate(p.DrawArea.TopLeft, p), p.Color, Point.Zero);
+                _vertices[quadIndex + 1] = new VertexPositionColorTextured(
+                    Rotate(p.DrawArea.TopRight, p), p.Color, Point.UnitX);
+                _vertices[quadIndex + 2] = new VertexPositionColorTextured(
+                    Rotate(p.DrawArea.BottomRight, p), p.Color, Point.One);
+                _vertices[quadIndex + 3] = new VertexPositionColorTextured(
+                    Rotate(p.DrawArea.BottomLeft, p), p.Color, Point.UnitY);
+
+                _indices[indicesIndex++] = (short)quadIndex;
+                _indices[indicesIndex++] = (short)(quadIndex + 1);
+                _indices[indicesIndex++] = (short)(quadIndex + 2);
+                _indices[indicesIndex++] = (short)quadIndex;
+                _indices[indicesIndex++] = (short)(quadIndex + 2);
+                _indices[indicesIndex++] = (short)(quadIndex + 3);
+            }
+
+            foreach (Image img in textures)
+            {
+                img.Draw(new VertexPositionColorTextured[4]);
+            }
+
+            drawing.SetIndices(_indices, indicesIndex);
+            drawing.DrawVertices(VerticesMode.Triangles, _vertices);
         }
 
 		protected Point Rotate(Point point, Particle particle)

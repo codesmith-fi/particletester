@@ -51,8 +51,8 @@ using DeltaEngine.Rendering;
 
         public new float Rotation
         {
-            get { return base.Rotation * MathConstants.DegreesToRadiansRatio; }
-            set { base.Rotation = value * MathConstants.RadiansToDegreesRatio; }
+            get { return base.Rotation;}
+            set { base.Rotation = value; }
         }
 
         public Point Position 

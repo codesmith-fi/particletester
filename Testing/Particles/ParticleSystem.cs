@@ -14,6 +14,7 @@ namespace Codesmith.SmithNgine.Particles
     using Codesmith.SmithNgine.General;
     using DeltaEngine.Core;
     using DeltaEngine.Datatypes;
+    using DeltaEngine.Graphics;
     using DeltaEngine.Rendering;
 
     public enum ParticleSystemStatus
@@ -108,13 +109,20 @@ namespace Codesmith.SmithNgine.Particles
         }
 
         /// <summary>
-        /// The renderer
+        /// Drawing
         /// </summary>
-        public Renderer Renderer
+        public Drawing Drawing
         {
             get;
             set;
         }
+
+        public ScreenSpace Screen
+        {
+            get;
+            set;
+        }
+
 
         /// <summary>
         /// The particle bool
@@ -137,19 +145,14 @@ namespace Codesmith.SmithNgine.Particles
                 }
             }
         }
-
-        public ScreenSpace Screen
-        {
-            get;
-            set;
-        }
         #region Constructor
         /// <summary>
         /// Constructs a new particle system
         /// </summary>
-        public ParticleSystem(Renderer renderer) 
+        public ParticleSystem(ScreenSpace screen, Drawing drawing) 
         {
-            Renderer = renderer;
+            Drawing = drawing;
+            Screen = screen;
             effects = new List<ParticleEffect>();
             DefaultParticleSize = Size.Half;
             this.status = ParticleSystemStatus.Idle;
@@ -165,8 +168,7 @@ namespace Codesmith.SmithNgine.Particles
         public void AddEffect(ParticleEffect newEffect)
         {
             Debug.Assert(!effects.Contains(newEffect), "Can't add same effect twice");
-            newEffect.ParticleSystem = this;
-            newEffect.Renderer = Renderer;
+            newEffect.ParticleSystem = this;            
             newEffect.ParticleSize = DefaultParticleSize;
             effects.Add(newEffect);
         }
@@ -232,7 +234,7 @@ namespace Codesmith.SmithNgine.Particles
         {
             foreach (ParticleEffect e in effects)
             {
-                e.Draw(gameTime);
+                e.Draw(gameTime, Drawing);
             }
         }
         #endregion

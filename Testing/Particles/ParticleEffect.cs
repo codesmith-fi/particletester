@@ -16,6 +16,7 @@ namespace Codesmith.SmithNgine.Particles
     using DeltaEngine.Datatypes;
     using DeltaEngine.Core;
     using DeltaEngine.Rendering;
+    using DeltaEngine.Graphics;
 
     /// <summary>
     /// ParticleEffect class
@@ -238,11 +239,11 @@ namespace Codesmith.SmithNgine.Particles
             }
         }
 
-        public virtual void Draw(Time gameTime)
+        public virtual void Draw(Time gameTime, Drawing drawing)
         {
             foreach (ParticleEmitter e in emitters)
             {
-                e.Draw(gameTime);
+                e.Draw(gameTime, drawing);
             }
         }
         #endregion
