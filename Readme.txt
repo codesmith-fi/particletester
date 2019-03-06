@@ -12,6 +12,4 @@ Codebase is exactly same in both versions, except DE version uses Renderer and D
 
 Author:
 Erno Pakarinen / Codesmith
-erno@codesmith.fi
-
-Read my blog @ http://blog.codesmith.fi
+erpakari@gmail.com
